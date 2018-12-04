@@ -1020,7 +1020,9 @@ NOTE: We have to call the opcode `OR` by `EVMOR` instead, because K has trouble 
 ```k
     syntax UnStackOp ::= "ISZERO" | "NOT"
  // -------------------------------------
+/*
     rule <k> ISZERO W => W ==Word 0 ~> #push ... </k>
+*/
     rule <k> NOT    W => ~Word W    ~> #push ... </k>
 
     syntax BinStackOp ::= "ADD" | "MUL" | "SUB" | "DIV" | "EXP" | "MOD"
@@ -1061,9 +1063,15 @@ NOTE: We have to call the opcode `OR` by `EVMOR` instead, because K has trouble 
 
     syntax BinStackOp ::= "LT" | "GT" | "EQ"
  // ----------------------------------------
+/*
     rule <k> LT W0 W1 => W0 <Word  W1 ~> #push ... </k>
     rule <k> GT W0 W1 => W0 >Word  W1 ~> #push ... </k>
     rule <k> EQ W0 W1 => W0 ==Word W1 ~> #push ... </k>
+*/
+    rule <k> LT W0 W1 => bool2Word(W0  <Int W1) ~> #push ... </k>
+    rule <k> GT W0 W1 => bool2Word(W0  >Int W1) ~> #push ... </k>
+    rule <k> EQ W0 W1 => bool2Word(W0 ==Int W1) ~> #push ... </k>
+    rule <k> ISZERO W => bool2Word(W  ==Int 0 ) ~> #push ... </k>
 
     syntax BinStackOp ::= "SLT" | "SGT"
  // -----------------------------------
