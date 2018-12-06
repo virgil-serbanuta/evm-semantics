@@ -21,6 +21,7 @@
 
 # time kprove orig-balanceOf-spec.k -v -d .build/java --z3-executable --smt_prelude evm.smt2
 # time kprove orig-transfer-success-1-spec.k -v -d .build/java --z3-executable --smt_prelude evm.smt2
+# time kprove orig-transferFrom-success-1-spec.k -v -d .build/java --z3-executable --smt_prelude evm.smt2
 
 # time kompile -v --debug --backend java -d common common.k
 
@@ -29,4 +30,7 @@
 # time keq -v -d common -d1 .build/java -d2 .build/java -m1 ETHEREUM-SIMULATION -m2 ETHEREUM-SIMULATION -s1 balanceOf1-spec.k -s2 balanceOf3-spec.k -sm1 BALANCEOF1-SPEC -sm2 BALANCEOF3-SPEC --smt_prelude evm.smt2 --z3-executable
 
 # time keq -v -d common -d1 .build/java -d2 .build/java -m1 ETHEREUM-SIMULATION -m2 ETHEREUM-SIMULATION -s1 transfer-spec.k  -s2 transfer-spec.k  -sm1 TRANSFER-SPEC  -sm2 TRANSFER-SPEC  --smt_prelude evm.smt2 --z3-executable
-  time keq -v -d common -d1 .build/java -d2 .build/java -m1 ETHEREUM-SIMULATION -m2 ETHEREUM-SIMULATION -s1 transfer1-spec.k -s2 transfer2-spec.k -sm1 TRANSFER1-SPEC -sm2 TRANSFER2-SPEC --smt_prelude evm.smt2 --z3-executable
+# time keq -v -d common -d1 .build/java -d2 .build/java -m1 ETHEREUM-SIMULATION -m2 ETHEREUM-SIMULATION -s1 transfer1-spec.k -s2 transfer2-spec.k -sm1 TRANSFER1-SPEC -sm2 TRANSFER2-SPEC --smt_prelude evm.smt2 --z3-executable
+
+# time keq -v -d common -d1 .build/java -d2 .build/java -m1 ETHEREUM-SIMULATION -m2 ETHEREUM-SIMULATION -s1 transferFrom-spec.k  -s2 transferFrom-spec.k  -sm1 TRANSFERFROM-SPEC  -sm2 TRANSFERFROM-SPEC  --smt_prelude evm.smt2 --z3-executable
+  time keq -v -d common -d1 .build/java -d2 .build/java -m1 ETHEREUM-SIMULATION -m2 ETHEREUM-SIMULATION -s1 transferFrom1-spec.k -s2 transferFrom2-spec.k -sm1 TRANSFERFROM1-SPEC -sm2 TRANSFERFROM2-SPEC --smt_prelude evm.smt2 --z3-executable
