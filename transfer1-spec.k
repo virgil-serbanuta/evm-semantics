@@ -85,8 +85,8 @@ module TRANSFER1-SPEC
   andBool 0 <=Int VALUE      andBool VALUE      <Int (2 ^Int 256)
   andBool 0 <=Int BAL_FROM   andBool BAL_FROM   <Int (2 ^Int 256)
   andBool 0 <=Int BAL_TO     andBool BAL_TO     <Int (2 ^Int 256)
-  andBool CALLER_ID =/=Int TO_ID
-  andBool #hashedLocation("Solidity", 0, CALLER_ID) =/=Int #hashedLocation("Solidity", 0, TO_ID)
+//andBool CALLER_ID =/=Int TO_ID
+//andBool #hashedLocation("Solidity", 0, CALLER_ID) =/=Int #hashedLocation("Solidity", 0, TO_ID)
 //andBool VALUE <=Int BAL_FROM
 //andBool BAL_TO +Int VALUE <Int (2 ^Int 256)
 //andBool TO_ID =/=Int 0
