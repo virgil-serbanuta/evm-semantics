@@ -1660,6 +1660,7 @@ Precompiled Contracts
     rule #precompiledAccounts(EIP158)         => #precompiledAccounts(EIP150)
     rule #precompiledAccounts(BYZANTIUM)      => #precompiledAccounts(EIP158) SetItem(5) SetItem(6) SetItem(7) SetItem(8)
     rule #precompiledAccounts(CONSTANTINOPLE) => #precompiledAccounts(BYZANTIUM)
+    rule #precompiledAccounts(PETERSBURG)     => #precompiledAccounts(CONSTANTINOPLE)
 ```
 
 -   `ECREC` performs ECDSA public key recovery.
@@ -2525,6 +2526,18 @@ static const EVMSchedule ConstantinopleSchedule = []
     schedule.haveCreate2 = true;
     return schedule;
 }();
+```
+
+### Petersburg Schedule
+
+```k
+    syntax Schedule ::= "PETERSBURG" [klabel(PETERSBURG_EVM), symbol]
+ // -----------------------------------------------------------------
+    rule SCHEDCONST < PETERSBURG > => SCHEDCONST < CONSTANTINOPLE >
+
+    rule Ghasdirtysstore << PETERSBURG >> => false
+    rule SCHEDFLAG       << PETERSBURG >> => SCHEDFLAG << CONSTANTINOPLE >>
+      requires notBool ( SCHEDFLAG ==K Ghasdirtysstore )
 ```
 
 EVM Program Representations
