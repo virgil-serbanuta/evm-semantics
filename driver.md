@@ -11,10 +11,20 @@ requires "evm-node.k"
 ```k
 requires "evm.k"
 requires "analysis.k"
+```
 
+```{.k .concrete}
+requires "kevm-lemmas-spec.k"
+```
+
+```k
 module ETHEREUM-SIMULATION
     imports EVM
     imports K-REFLECTION
+```
+
+```{.k .concrete}
+    imports KEVM-LEMMAS-SPEC
 ```
 
 ```{.k .standalone}

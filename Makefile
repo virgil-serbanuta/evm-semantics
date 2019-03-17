@@ -110,7 +110,7 @@ symbolic_tangle:=.k:not(.node):not(.concrete),.standalone,.symbolic
 node_tangle:=.k:not(.standalone):not(.symbolic),.node,.concrete
 
 k_files:=driver.k data.k network.k evm.k analysis.k krypto.k edsl.k evm-node.k
-ocaml_files:=$(patsubst %,.build/ocaml/%,$(k_files))
+ocaml_files:=$(patsubst %,.build/ocaml/%,$(k_files) kevm-lemmas-spec.k)
 java_files:=$(patsubst %,.build/java/%,$(k_files))
 node_files:=$(patsubst %,.build/node/%,$(k_files))
 haskell_files:=$(patsubst %,.build/haskell/%,$(k_files))
