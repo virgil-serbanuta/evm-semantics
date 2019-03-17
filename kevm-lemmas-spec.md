@@ -8,15 +8,14 @@ module KEVM-LEMMAS-SPEC
 **TODO**: See if this speeds up ocaml backend by adding `[structural]` to these rules in the semantics.
 **TODO**: See if this speeds up llvm backend by modifying https://github.com/kframework/llvm-backend/blob/master/matching/src/Pattern/Parser.hs#L163
 
-```
+```k
     rule <mode> MODE </mode>
          <schedule> SCHEDULE </schedule>
-         <k> #execute ... </k>
+         <k> #next => . ... </k>
          <pc> PCOUNT => PCOUNT +Int 1 </pc>
          <program> ... PCOUNT |-> ADD ... </program>
          <wordStack> W0 : W1 : WS => chop ( W0 +Int W1 ) : WS </wordStack>
          <gas> G => G -Int Gverylow < SCHEDULE > </gas>
-         <static> STATIC </static>
          <memoryUsed> MU </memoryUsed>
       requires MODE in ( SetItem(NORMAL) SetItem(VMTESTS) )
        andBool G >=Int ( ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
@@ -29,7 +28,9 @@ module KEVM-LEMMAS-SPEC
                )
        andBool notBool ( #stackUnderflow(W0 : W1 : WS, ADD) orBool #stackOverflow(W0 : W1 : WS, ADD) )
       [structural]
+```
 
+```
     rule <mode> MODE </mode>
          <schedule> SCHEDULE </schedule>
          <k> #execute ... </k>
