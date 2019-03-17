@@ -23,7 +23,7 @@ export LUA_PATH
         defn java-defn ocaml-defn node-defn haskell-defn \
         test test-all test-concrete test-all-concrete test-conformance test-slow-conformance test-all-conformance \
         test-vm test-slow-vm test-all-vm test-bchain test-slow-bchain test-all-bchain \
-        test-proof test-interactive test-vm-haskell \
+        test-proof test-kevm-lemmas test-interactive test-vm-haskell \
         metropolis-theme 2017-devcon3 sphinx
 .SECONDARY:
 
@@ -322,6 +322,9 @@ $(proof_dir)/%.test: $(proof_dir)/% split-proof-tests
 
 split-proof-tests: tests/proofs/make.timestamp
 	$(MAKE) -C tests/proofs $@
+
+test-kevm-lemmas: .build/ocaml/kevm-lemmas-spec.k .build/java/driver-kompiled/timestamp
+	./kevm prove .build/ocaml/kevm-lemmas-spec.k --def-module EVM --boundary-cells k,pc
 
 # Media
 # -----
