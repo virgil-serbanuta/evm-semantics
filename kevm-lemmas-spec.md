@@ -9,7 +9,7 @@ module KEVM-LEMMAS-SPEC
 **TODO**: See if this speeds up llvm backend by modifying https://github.com/kframework/llvm-backend/blob/master/matching/src/Pattern/Parser.hs#L163
 
 ```
-    rule <mode> NORMAL </mode>
+    rule <mode> MODE </mode>
          <schedule> SCHEDULE </schedule>
          <k> #execute ... </k>
          <pc> PCOUNT => PCOUNT +Int 1 </pc>
@@ -18,7 +18,8 @@ module KEVM-LEMMAS-SPEC
          <gas> G => G -Int Gverylow < SCHEDULE > </gas>
          <static> STATIC </static>
          <memoryUsed> MU </memoryUsed>
-      requires G >=Int ( ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
+      requires MODE in ( SetItem(NORMAL) SetItem(VMTESTS) )
+       andBool G >=Int ( ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
                     -Int ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
                        )
        andBool ( G -Int ( ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
@@ -29,7 +30,7 @@ module KEVM-LEMMAS-SPEC
        andBool notBool ( #stackUnderflow(W0 : W1 : WS, ADD) orBool #stackOverflow(W0 : W1 : WS, ADD) )
       [structural]
 
-    rule <mode> NORMAL </mode>
+    rule <mode> MODE </mode>
          <schedule> SCHEDULE </schedule>
          <k> #execute ... </k>
          <pc> PCOUNT => PCOUNT +Int 1 </pc>
@@ -38,7 +39,8 @@ module KEVM-LEMMAS-SPEC
          <gas> G => G -Int Gverylow < SCHEDULE > </gas>
          <static> STATIC </static>
          <memoryUsed> MU </memoryUsed>
-      requires G >=Int ( ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
+      requires MODE in ( SetItem(NORMAL) SetItem(VMTESTS) )
+       andBool G >=Int ( ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
                     -Int ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
                        )
        andBool ( G -Int ( ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
@@ -49,7 +51,7 @@ module KEVM-LEMMAS-SPEC
        andBool notBool ( #stackUnderflow(W0 : W1 : WS, SUB) orBool #stackOverflow(W0 : W1 : WS, SUB) )
       [structural]
 
-    rule <mode> NORMAL </mode>
+    rule <mode> MODE </mode>
          <schedule> SCHEDULE </schedule>
          <k> #execute ... </k>
          <pc> PCOUNT => PCOUNT +Int 1 </pc>
@@ -58,7 +60,8 @@ module KEVM-LEMMAS-SPEC
          <gas> G => G -Int Glow < SCHEDULE > </gas>
          <static> STATIC </static>
          <memoryUsed> MU </memoryUsed>
-      requires G >=Int ( ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
+      requires MODE in ( SetItem(NORMAL) SetItem(VMTESTS) )
+       andBool G >=Int ( ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
                     -Int ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
                        )
        andBool ( G -Int ( ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
@@ -69,7 +72,7 @@ module KEVM-LEMMAS-SPEC
        andBool notBool ( #stackUnderflow(W0 : W1 : WS, MUL) orBool #stackOverflow(W0 : W1 : WS, MUL) )
       [structural]
 
-    rule <mode> NORMAL </mode>
+    rule <mode> MODE </mode>
          <schedule> SCHEDULE </schedule>
          <k> #execute ... </k>
          <pc> PCOUNT => PCOUNT +Int 1 </pc>
@@ -78,7 +81,8 @@ module KEVM-LEMMAS-SPEC
          <gas> G => G -Int Glow < SCHEDULE > </gas>
          <static> STATIC </static>
          <memoryUsed> MU </memoryUsed>
-      requires G >=Int ( ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
+      requires MODE in ( SetItem(NORMAL) SetItem(VMTESTS) )
+       andBool G >=Int ( ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
                     -Int ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
                        )
        andBool ( G -Int ( ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
