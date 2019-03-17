@@ -28,17 +28,14 @@ module KEVM-LEMMAS-SPEC
                )
        andBool notBool ( #stackUnderflow(W0 : W1 : WS, ADD) orBool #stackOverflow(W0 : W1 : WS, ADD) )
       [structural]
-```
 
-```
     rule <mode> MODE </mode>
          <schedule> SCHEDULE </schedule>
-         <k> #execute ... </k>
+         <k> #next => . ... </k>
          <pc> PCOUNT => PCOUNT +Int 1 </pc>
          <program> ... PCOUNT |-> SUB ... </program>
          <wordStack> W0 : W1 : WS => W0 -Word W1 : WS </wordStack>
          <gas> G => G -Int Gverylow < SCHEDULE > </gas>
-         <static> STATIC </static>
          <memoryUsed> MU </memoryUsed>
       requires MODE in ( SetItem(NORMAL) SetItem(VMTESTS) )
        andBool G >=Int ( ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
@@ -51,7 +48,9 @@ module KEVM-LEMMAS-SPEC
                )
        andBool notBool ( #stackUnderflow(W0 : W1 : WS, SUB) orBool #stackOverflow(W0 : W1 : WS, SUB) )
       [structural]
+```
 
+```
     rule <mode> MODE </mode>
          <schedule> SCHEDULE </schedule>
          <k> #execute ... </k>
