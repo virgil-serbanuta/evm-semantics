@@ -27,7 +27,7 @@ export LUA_PATH
         defn java-defn ocaml-defn node-defn haskell-defn \
         test test-all test-conformance test-slow-conformance test-all-conformance \
         test-vm test-slow-vm test-all-vm test-bchain test-slow-bchain test-all-bchain \
-        test-proof test-parse test-interactive test-interactive-run test-interactive-prove \
+        test-proof test-parse test-interactive test-interactive-run test-interactive-prove test-kevm-lemmas \
         metropolis-theme 2017-devcon3 sphinx
 .SECONDARY:
 
@@ -351,6 +351,9 @@ parse_tests:=$(wildcard tests/interactive/*.json) \
 
 test-parse: $(parse_tests:=.parse)
 	echo $(parse_tests)
+
+test-kevm-lemmas: .build/java/kevm-lemmas-spec.k .build/java/driver-kompiled/timestamp
+	./kevm prove --backend $(TEST_SYMBOLIC_BACKEND) .build/java/kevm-lemmas-spec.k --boundary-cells k,pc --format-failures
 
 # Interactive Tests
 
