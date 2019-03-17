@@ -88,6 +88,26 @@ module KEVM-LEMMAS-SPEC
                )
        andBool notBool ( #stackUnderflow(W0 : W1 : WS, DIV) orBool #stackOverflow(W0 : W1 : WS, DIV) )
       [structural]
+
+    rule <mode> MODE </mode>
+         <schedule> SCHEDULE </schedule>
+         <k> #next => . ... </k>
+         <pc> PCOUNT => PCOUNT +Int #widthOp(PUSH(N, M)) </pc>
+         <program> ... PCOUNT |-> PUSH(N, M) ... </program>
+         <wordStack> WS => M : WS </wordStack>
+         <gas> G => G -Int Gverylow < SCHEDULE > </gas>
+         <memoryUsed> MU </memoryUsed>
+      requires MODE in ( SetItem(NORMAL) SetItem(VMTESTS) )
+       andBool G >=Int ( ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
+                    -Int ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
+                       )
+       andBool ( G -Int ( ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
+                     -Int ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
+                        )
+           >=Int Gverylow < SCHEDULE >
+               )
+       andBool notBool ( #stackUnderflow(WS, PUSH(N, M)) orBool #stackOverflow(WS, PUSH(N, M)) )
+      [structural]
 ```
 
 ```k
