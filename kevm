@@ -74,7 +74,9 @@ run_klab() {
     $0 "$run_mode" --backend java "$run_file" \
         --state-log --state-log-path "$klab_dir/data" --state-log-id kevm-statelog \
         --state-log-events OPEN,EXECINIT,SEARCHINIT,REACHINIT,REACHTARGET,REACHPROVED,NODE,RULE,SRULE,RULEATTEMPT,IMPLICATION,Z3QUERY,Z3RESULT,CLOSE \
-        --output json --restore-original-names \
+        --output-omit "<programBytes> <program> <code> <previousGas> <touchedAccounts> <interimStates> <callStack> <callData>" \
+        --output-flatten "_Map_ #And" \
+        --no-alpha-renaming --restore-original-names --no-sort-collections \
         "$@" \
         >/dev/null || true
 
