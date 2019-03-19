@@ -109,8 +109,8 @@ concrete_tangle:=.k:not(.node):not(.symbolic),.standalone,.concrete
 symbolic_tangle:=.k:not(.node):not(.concrete),.standalone,.symbolic
 node_tangle:=.k:not(.standalone):not(.symbolic),.node,.concrete
 
-k_files:=driver.k data.k network.k evm.k analysis.k krypto.k edsl.k evm-node.k
-ocaml_files:=$(patsubst %,.build/ocaml/%,$(k_files) kevm-lemmas-spec.k)
+k_files:=driver.k data.k network.k evm.k kevm-lemmas-spec.k analysis.k krypto.k edsl.k evm-node.k
+ocaml_files:=$(patsubst %,.build/ocaml/%,$(k_files))
 java_files:=$(patsubst %,.build/java/%,$(k_files))
 node_files:=$(patsubst %,.build/node/%,$(k_files))
 haskell_files:=$(patsubst %,.build/haskell/%,$(k_files))
@@ -323,8 +323,8 @@ $(proof_dir)/%.test: $(proof_dir)/% split-proof-tests
 split-proof-tests: tests/proofs/make.timestamp
 	$(MAKE) -C tests/proofs $@
 
-test-kevm-lemmas: .build/ocaml/kevm-lemmas-spec.k .build/java/driver-kompiled/timestamp
-	./kevm prove .build/ocaml/kevm-lemmas-spec.k --def-module EVM --boundary-cells k,pc
+test-kevm-lemmas: .build/java/kevm-lemmas-spec.k .build/java/driver-kompiled/timestamp
+	./kevm prove .build/java/kevm-lemmas-spec.k --def-module EVM --boundary-cells k,pc
 
 # Media
 # -----
