@@ -5,11 +5,14 @@ module VERIFICATION
     imports EDSL
 
     rule I -Int I => 0
-
     // avoids the following expression:
     // andBool G >=Int ( ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
     //              -Int ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
     //                 )
+
+    rule I -Int 0 => I
+    // avoids the following expression:
+    // G -Int 0
 endmodule
 
 module KEVM-LEMMAS-SPEC
@@ -24,16 +27,15 @@ module KEVM-LEMMAS-SPEC
          <static> false </static>
          <mode> NORMAL </mode>
          <schedule> SCHEDULE </schedule>
-         <callGas> _ => _ </callGas>
          <program> #asMapOpCodes( PUSH(32, X) ; PUSH(32, Y) ; ADD ; .OpCodes ) </program>
-         <pc> 0  => _ </pc>
-         <wordStack> .WordStack => chop ( X +Int Y ) : .WordStack </wordStack>
-         <gas> G  => G -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > </gas>
-         <memoryUsed> MU </memoryUsed>
+         <pc> 0 => _ </pc>
+         <wordStack> .WordStack => X +Word Y : .WordStack </wordStack>
+         <gas> G => G -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > </gas>
+         <callGas> _ => _ </callGas>
        requires #range(0 <= X < pow256)
         andBool #range(0 <= Y < pow256)
-        andBool G >=Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE >
         andBool G >=Int 0
+        andBool G >=Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE >
       [structural]
 ```
 
@@ -42,47 +44,49 @@ module KEVM-LEMMAS-SPEC
          <static> false </static>
          <mode> NORMAL </mode>
          <schedule> SCHEDULE </schedule>
-         <callGas> _ => _ </callGas>
          <program> #asMapOpCodes( PUSH(32, X) ; PUSH(32, Y) ; SUB ; .OpCodes ) </program>
-         <pc> 0  => _ </pc>
+         <pc> 0 => _ </pc>
          <wordStack> .WordStack => W0 -Word W1 : .WordStack </wordStack>
-         <gas> G  => G -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > </gas>
-         <memoryUsed> MU </memoryUsed>
+         <gas> G => G -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > </gas>
+         <callGas> _ => _ </callGas>
        requires #range(0 <= X < pow256)
         andBool #range(0 <= Y < pow256)
         andBool G >=Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE >
         andBool G >=Int 0
       [structural]
+```
 
+```k
     rule <k> #execute ... </k>
          <static> false </static>
          <mode> NORMAL </mode>
          <schedule> SCHEDULE </schedule>
-         <callGas> _ => _ </callGas>
          <program> #asMapOpCodes( PUSH(32, X) ; PUSH(32, Y) ; MUL ; .OpCodes ) </program>
-         <pc> 0  => _ </pc>
-         <wordStack> .WordStack => chop ( X *Int Y ) : .WordStack </wordStack>
-         <gas> G  => G -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > </gas>
-         <memoryUsed> MU </memoryUsed>
+         <pc> 0 => _ </pc>
+         <wordStack> .WordStack => X *Word Y : .WordStack </wordStack>
+         <gas> G => G -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > -Int Glow < SCHEDULE > </gas>
+         <callGas> _ => _ </callGas>
        requires #range(0 <= X < pow256)
         andBool #range(0 <= Y < pow256)
-        andBool G >=Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE >
         andBool G >=Int 0
+        andBool G >=Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE >
+        andBool G >=Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE > +Int Glow < SCHEDULE >
       [structural]
+```
 
+```
     rule <k> #execute ... </k>
          <static> false </static>
          <mode> NORMAL </mode>
          <schedule> SCHEDULE </schedule>
-         <callGas> _ => _ </callGas>
          <program> #asMapOpCodes( PUSH(32, X) ; PUSH(32, Y) ; DIV ; .OpCodes ) </program>
-         <pc> 0  => _ </pc>
-         <wordStack> .WordStack => chop ( X /Int Y ) : .WordStack </wordStack>
-         <gas> G  => G -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > </gas>
-         <memoryUsed> MU </memoryUsed>
+         <pc> 0 => _ </pc>
+         <wordStack> .WordStack => X /Word Y : .WordStack </wordStack>
+         <gas> G => G -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > -Int Glow < SCHEDULE > </gas>
+         <callGas> _ => _ </callGas>
        requires #range(0 <= X < pow256)
         andBool #range(0 <= Y < pow256)
-        andBool G >=Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE >
+        andBool G >=Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE > +Int Glow < SCHEDULE >
         andBool G >=Int 0
       [structural]
 ```
