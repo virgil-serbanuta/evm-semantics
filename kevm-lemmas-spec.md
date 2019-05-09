@@ -51,12 +51,12 @@ module KEVM-LEMMAS-SPEC
          <callGas> _ => _ </callGas>
        requires #range(0 <= X < pow256)
         andBool #range(0 <= Y < pow256)
-        andBool G >=Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE >
         andBool G >=Int 0
+        andBool G >=Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE >
       [structural]
 ```
 
-```k
+```
     rule <k> #execute ... </k>
          <static> false </static>
          <mode> NORMAL </mode>
@@ -86,8 +86,8 @@ module KEVM-LEMMAS-SPEC
          <callGas> _ => _ </callGas>
        requires #range(0 <= X < pow256)
         andBool #range(0 <= Y < pow256)
-        andBool G >=Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE > +Int Glow < SCHEDULE >
         andBool G >=Int 0
+        andBool G >=Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE > +Int Glow < SCHEDULE >
       [structural]
 ```
 
