@@ -23,72 +23,63 @@ module KEVM-LEMMAS-SPEC
 **TODO**: See if this speeds up llvm backend by modifying https://github.com/kframework/llvm-backend/blob/master/matching/src/Pattern/Parser.hs#L163
 
 ```k
-    rule <k> #execute ... </k>
-         <static> false </static>
+    rule <k> #next [ ADD ] => . ... </k>
          <mode> NORMAL </mode>
          <schedule> SCHEDULE </schedule>
-         <program> #asMapOpCodes( PUSH(32, X) ; PUSH(32, Y) ; ADD ; .OpCodes ) </program>
-         <pc> 0 => _ </pc>
-         <wordStack> .WordStack => X +Word Y : .WordStack </wordStack>
-         <gas> G => G -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > </gas>
-         <callGas> _ => _ </callGas>
+         <pc> PCOUNT => PCOUNT +Int 1 </pc>
+         <wordStack> X : Y : WS => X +Word Y : WS </wordStack>
+         <gas> G => G -Int Gverylow < SCHEDULE > </gas>
        requires #range(0 <= X < pow256)
         andBool #range(0 <= Y < pow256)
+        andBool notBool ( #stackUnderflow(X : Y : WS, ADD) orBool #stackOverflow(X : Y : WS, ADD) )
         andBool G >=Int 0
-        andBool G >=Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE >
-      [structural]
+        andBool G >=Int Gverylow < SCHEDULE >
+      [tag(optim)]
 ```
 
-```
-    rule <k> #execute ... </k>
-         <static> false </static>
+```k
+    rule <k> #next [ SUB ] => . ... </k>
          <mode> NORMAL </mode>
          <schedule> SCHEDULE </schedule>
-         <program> #asMapOpCodes( PUSH(32, X) ; PUSH(32, Y) ; SUB ; .OpCodes ) </program>
-         <pc> 0 => _ </pc>
-         <wordStack> .WordStack => W0 -Word W1 : .WordStack </wordStack>
-         <gas> G => G -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > </gas>
-         <callGas> _ => _ </callGas>
+         <pc> PCOUNT => PCOUNT +Int 1 </pc>
+         <wordStack> X : Y : WS => X -Word Y : WS </wordStack>
+         <gas> G => G -Int Gverylow < SCHEDULE > </gas>
        requires #range(0 <= X < pow256)
         andBool #range(0 <= Y < pow256)
+        andBool notBool ( #stackUnderflow(X : Y : WS, ADD) orBool #stackOverflow(X : Y : WS, ADD) )
         andBool G >=Int 0
-        andBool G >=Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE >
-      [structural]
+        andBool G >=Int Gverylow < SCHEDULE >
+      [tag(optim)]
 ```
 
-```
-    rule <k> #execute ... </k>
-         <static> false </static>
+```k
+    rule <k> #next [ MUL ] => . ... </k>
          <mode> NORMAL </mode>
          <schedule> SCHEDULE </schedule>
-         <program> #asMapOpCodes( PUSH(32, X) ; PUSH(32, Y) ; MUL ; .OpCodes ) </program>
-         <pc> 0 => _ </pc>
-         <wordStack> .WordStack => X *Word Y : .WordStack </wordStack>
-         <gas> G => G -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > -Int Glow < SCHEDULE > </gas>
-         <callGas> _ => _ </callGas>
+         <pc> PCOUNT => PCOUNT +Int 1 </pc>
+         <wordStack> X : Y : WS => X *Word Y : WS </wordStack>
+         <gas> G => G -Int Glow < SCHEDULE > </gas>
        requires #range(0 <= X < pow256)
         andBool #range(0 <= Y < pow256)
+        andBool notBool ( #stackUnderflow(X : Y : WS, ADD) orBool #stackOverflow(X : Y : WS, ADD) )
         andBool G >=Int 0
-        andBool G >=Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE >
-        andBool G >=Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE > +Int Glow < SCHEDULE >
-      [structural]
+        andBool G >=Int Glow < SCHEDULE >
+      [tag(optim)]
 ```
 
-```
-    rule <k> #execute ... </k>
-         <static> false </static>
+```k
+    rule <k> #next [ DIV ] => . ... </k>
          <mode> NORMAL </mode>
          <schedule> SCHEDULE </schedule>
-         <program> #asMapOpCodes( PUSH(32, X) ; PUSH(32, Y) ; DIV ; .OpCodes ) </program>
-         <pc> 0 => _ </pc>
-         <wordStack> .WordStack => X /Word Y : .WordStack </wordStack>
-         <gas> G => G -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > -Int Glow < SCHEDULE > </gas>
-         <callGas> _ => _ </callGas>
+         <pc> PCOUNT => PCOUNT +Int 1 </pc>
+         <wordStack> X : Y : WS => X /Word Y : WS </wordStack>
+         <gas> G => G -Int Glow < SCHEDULE > </gas>
        requires #range(0 <= X < pow256)
         andBool #range(0 <= Y < pow256)
+        andBool notBool ( #stackUnderflow(X : Y : WS, ADD) orBool #stackOverflow(X : Y : WS, ADD) )
         andBool G >=Int 0
-        andBool G >=Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE > +Int Glow < SCHEDULE >
-      [structural]
+        andBool G >=Int Glow < SCHEDULE >
+      [tag(optim)]
 ```
 
 ```k
