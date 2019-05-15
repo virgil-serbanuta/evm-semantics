@@ -344,6 +344,9 @@ proof_tests=$(wildcard $(proof_specs_dir)/*/*-spec.k)
 
 test-proof: $(proof_tests:=.prove)
 
+test-kevm-lemmas: .build/java/kevm-lemmas-spec.k .build/java/driver-kompiled/timestamp
+	./kevm prove --backend $(TEST_SYMBOLIC_BACKEND) .build/java/kevm-lemmas-spec.k --boundary-cells k,pc --format-failures
+
 # Parse Tests
 
 parse_tests:=$(wildcard tests/interactive/*.json) \
@@ -351,9 +354,6 @@ parse_tests:=$(wildcard tests/interactive/*.json) \
 
 test-parse: $(parse_tests:=.parse)
 	echo $(parse_tests)
-
-test-kevm-lemmas: .build/java/kevm-lemmas-spec.k .build/java/driver-kompiled/timestamp
-	./kevm prove --backend $(TEST_SYMBOLIC_BACKEND) .build/java/kevm-lemmas-spec.k --boundary-cells k,pc --format-failures
 
 # Interactive Tests
 
