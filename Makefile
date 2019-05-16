@@ -27,7 +27,7 @@ export LUA_PATH
         defn java-defn ocaml-defn node-defn haskell-defn \
         test test-all test-conformance test-slow-conformance test-all-conformance \
         test-vm test-slow-vm test-all-vm test-bchain test-slow-bchain test-all-bchain \
-        test-proof test-parse test-interactive test-interactive-run test-interactive-prove test-kevm-lemmas test-gen-spec \
+        test-proof test-parse test-interactive test-interactive-run test-interactive-prove test-kevm-lemmas test-prove-gen \
         metropolis-theme 2017-devcon3 sphinx
 .SECONDARY:
 
