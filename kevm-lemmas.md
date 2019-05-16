@@ -23,6 +23,19 @@ module KEVM-LEMMAS-SPEC
 **TODO**: See if this speeds up llvm backend by modifying https://github.com/kframework/llvm-backend/blob/master/matching/src/Pattern/Parser.hs#L163
 
 ```k
+    rule <k> #next [ PUSH(N, M) ] => . ... </k>
+         <mode> NORMAL </mode>
+         <schedule> SCHEDULE </schedule>
+         <pc> PCOUNT => PCOUNT +Int #widthOp(PUSH(N, M)) </pc>
+         <wordStack> WS => M : WS </wordStack>
+         <gas> G => G -Int Gverylow < SCHEDULE > </gas>
+       requires #range(0 <= M < pow256)
+        andBool notBool ( #stackUnderflow(WS, PUSH(N, M)) orBool #stackOverflow(WS, PUSH(N, M)) )
+        andBool G >=Int Gverylow < SCHEDULE >
+      [tag(optim)] // [trusted]
+```
+
+```k
     rule <k> #next [ ADD ] => . ... </k>
          <mode> NORMAL </mode>
          <schedule> SCHEDULE </schedule>
@@ -33,7 +46,7 @@ module KEVM-LEMMAS-SPEC
         andBool #range(0 <= Y < pow256)
         andBool notBool ( #stackUnderflow(X : Y : WS, ADD) orBool #stackOverflow(X : Y : WS, ADD) )
         andBool G >=Int Gverylow < SCHEDULE >
-      [tag(optim)]
+      [tag(optim)] // [trusted]
 ```
 
 ```k
@@ -47,7 +60,7 @@ module KEVM-LEMMAS-SPEC
         andBool #range(0 <= Y < pow256)
         andBool notBool ( #stackUnderflow(X : Y : WS, ADD) orBool #stackOverflow(X : Y : WS, ADD) )
         andBool G >=Int Gverylow < SCHEDULE >
-      [tag(optim)]
+      [tag(optim)] // [trusted]
 ```
 
 ```k
@@ -61,7 +74,7 @@ module KEVM-LEMMAS-SPEC
         andBool #range(0 <= Y < pow256)
         andBool notBool ( #stackUnderflow(X : Y : WS, ADD) orBool #stackOverflow(X : Y : WS, ADD) )
         andBool G >=Int Glow < SCHEDULE >
-      [tag(optim)]
+      [tag(optim)] // [trusted]
 ```
 
 ```k
@@ -75,7 +88,7 @@ module KEVM-LEMMAS-SPEC
         andBool #range(0 <= Y < pow256)
         andBool notBool ( #stackUnderflow(X : Y : WS, ADD) orBool #stackOverflow(X : Y : WS, ADD) )
         andBool G >=Int Glow < SCHEDULE >
-      [tag(optim)]
+      [tag(optim)] // [trusted]
 ```
 
 ```k
