@@ -32,7 +32,7 @@ module KEVM-LEMMAS-SPEC
        requires #range(0 <= M < pow256)
         andBool notBool ( #stackUnderflow(WS, PUSH(N, M)) orBool #stackOverflow(WS, PUSH(N, M)) )
         andBool G >=Int Gverylow < SCHEDULE >
-      [tag(optim)] // [trusted]
+      [tag(optim)]
 ```
 
 ```k
@@ -46,7 +46,7 @@ module KEVM-LEMMAS-SPEC
         andBool #range(0 <= Y < pow256)
         andBool notBool ( #stackUnderflow(X : Y : WS, ADD) orBool #stackOverflow(X : Y : WS, ADD) )
         andBool G >=Int Gverylow < SCHEDULE >
-      [tag(optim)] // [trusted]
+      [tag(optim)]
 ```
 
 ```k
@@ -60,7 +60,7 @@ module KEVM-LEMMAS-SPEC
         andBool #range(0 <= Y < pow256)
         andBool notBool ( #stackUnderflow(X : Y : WS, ADD) orBool #stackOverflow(X : Y : WS, ADD) )
         andBool G >=Int Gverylow < SCHEDULE >
-      [tag(optim)] // [trusted]
+      [tag(optim)]
 ```
 
 ```k
@@ -74,7 +74,7 @@ module KEVM-LEMMAS-SPEC
         andBool #range(0 <= Y < pow256)
         andBool notBool ( #stackUnderflow(X : Y : WS, ADD) orBool #stackOverflow(X : Y : WS, ADD) )
         andBool G >=Int Glow < SCHEDULE >
-      [tag(optim)] // [trusted]
+      [tag(optim)]
 ```
 
 ```k
@@ -88,7 +88,31 @@ module KEVM-LEMMAS-SPEC
         andBool #range(0 <= Y < pow256)
         andBool notBool ( #stackUnderflow(X : Y : WS, ADD) orBool #stackOverflow(X : Y : WS, ADD) )
         andBool G >=Int Glow < SCHEDULE >
-      [tag(optim)] // [trusted]
+      [tag(optim)]
+```
+
+```k
+    rule <k> PUSH(N, X) ; PUSH(M, Y) ; ADD ; .OpCodes => . ... </k>
+         <mode> NORMAL </mode>
+         <schedule> SCHEDULE </schedule>
+         <pc> PCOUNT => PCOUNT +Int #widthOps(PUSH(N, X) ; PUSH(M, Y) ; ADD ; .OpCodes) </pc>
+         <wordStack> WS => X +Word Y : WS </wordStack>
+         <gas> G => G -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > -Int Gverylow < SCHEDULE > </gas>
+       requires #range(0 <= X < pow256)
+        andBool #range(0 <= Y < pow256)
+        andBool notBool ( #stackUnderflow(       WS, PUSH(N, X)) orBool #stackOverflow(        WS, PUSH(N, X))
+                   orBool #stackUnderflow(   X : WS, PUSH(N, Y)) orBool #stackOverflow(    Y : WS, PUSH(N, Y))
+                   orBool #stackUnderflow(Y: X : WS, ADD)        orBool #stackOverflow(X : Y : WS, ADD)
+                        )
+        // andBool notBool ( #stackUnderflow(       WS, PUSH(N, X)) orBool #stackOverflow(        WS, PUSH(N, X)) )
+        // andBool notBool ( #stackUnderflow(   X : WS, PUSH(N, Y)) orBool #stackOverflow(    Y : WS, PUSH(N, Y)) )
+        // andBool notBool ( #stackUnderflow(Y: X : WS, ADD)        orBool #stackOverflow(X : Y : WS, ADD)        )
+        // andBool notBool (sizeWordStackAux(WS, 0) <Int 0 orBool sizeWordStackAux(WS, 0) +Int  1 >Int 1024)
+        // andBool notBool (sizeWordStackAux(WS, 1) <Int 0 orBool sizeWordStackAux(WS, 1) +Int  1 >Int 1024)
+        // andBool notBool (sizeWordStackAux(WS, 2) <Int 2 orBool sizeWordStackAux(WS, 2) +Int -1 >Int 1024)
+        andBool G >=Int Gverylow < SCHEDULE >
+        andBool G >=Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE >
+        andBool G >=Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE > +Int Gverylow < SCHEDULE >
 ```
 
 ```k
