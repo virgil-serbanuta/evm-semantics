@@ -32,7 +32,6 @@ module KEVM-LEMMAS-SPEC
        requires #range(0 <= X < pow256)
         andBool #range(0 <= Y < pow256)
         andBool notBool ( #stackUnderflow(X : Y : WS, ADD) orBool #stackOverflow(X : Y : WS, ADD) )
-        andBool G >=Int 0
         andBool G >=Int Gverylow < SCHEDULE >
       [tag(optim)]
 ```
@@ -47,7 +46,6 @@ module KEVM-LEMMAS-SPEC
        requires #range(0 <= X < pow256)
         andBool #range(0 <= Y < pow256)
         andBool notBool ( #stackUnderflow(X : Y : WS, ADD) orBool #stackOverflow(X : Y : WS, ADD) )
-        andBool G >=Int 0
         andBool G >=Int Gverylow < SCHEDULE >
       [tag(optim)]
 ```
@@ -62,7 +60,6 @@ module KEVM-LEMMAS-SPEC
        requires #range(0 <= X < pow256)
         andBool #range(0 <= Y < pow256)
         andBool notBool ( #stackUnderflow(X : Y : WS, ADD) orBool #stackOverflow(X : Y : WS, ADD) )
-        andBool G >=Int 0
         andBool G >=Int Glow < SCHEDULE >
       [tag(optim)]
 ```
@@ -77,7 +74,6 @@ module KEVM-LEMMAS-SPEC
        requires #range(0 <= X < pow256)
         andBool #range(0 <= Y < pow256)
         andBool notBool ( #stackUnderflow(X : Y : WS, ADD) orBool #stackOverflow(X : Y : WS, ADD) )
-        andBool G >=Int 0
         andBool G >=Int Glow < SCHEDULE >
       [tag(optim)]
 ```
