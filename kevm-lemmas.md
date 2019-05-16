@@ -36,6 +36,19 @@ module KEVM-LEMMAS-SPEC
 ```
 
 ```k
+    rule <k> #next [ POP ] => . ... </k>
+         <mode> NORMAL </mode>
+         <schedule> SCHEDULE </schedule>
+         <pc> PCOUNT => PCOUNT +Int #widthOp(POP) </pc>
+         <wordStack> W : WS => WS </wordStack>
+         <gas> G => G -Int Gbase < SCHEDULE > </gas>
+       requires #range(0 <= W < pow256)
+        andBool notBool ( #stackUnderflow(W : WS, POP) orBool #stackOverflow(W : WS, POP) )
+        andBool G >=Int Gbase < SCHEDULE >
+      [tag(optim)]
+```
+
+```k
     rule <k> #next [ ADD ] => . ... </k>
          <mode> NORMAL </mode>
          <schedule> SCHEDULE </schedule>
