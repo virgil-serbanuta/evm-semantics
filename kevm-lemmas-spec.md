@@ -4,13 +4,13 @@ requires "edsl.k"
 module VERIFICATION
     imports EDSL
 
-    rule I -Int I => 0
+    // rule I -Int I => 0
     // avoids the following expression:
     // andBool G >=Int ( ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
     //              -Int ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
     //                 )
 
-    rule I -Int 0 => I
+    // rule I -Int 0 => I
     // avoids the following expression:
     // G -Int 0
 endmodule
