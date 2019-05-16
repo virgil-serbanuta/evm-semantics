@@ -257,6 +257,7 @@ endif
 
 TEST_CONCRETE_BACKEND:=ocaml
 TEST_SYMBOLIC_BACKEND:=java
+KPROVE_MODULE:=VERIFICATION
 CHECK:=git --no-pager diff --no-index --ignore-all-space
 
 KEVM_MODE:=NORMAL
@@ -293,7 +294,7 @@ tests/%.parse: tests/%
 	rm -rf $@-out
 
 tests/%.prove: tests/%
-	./kevm prove --backend $(TEST_SYMBOLIC_BACKEND) $< --format-failures
+	./kevm prove --backend $(TEST_SYMBOLIC_BACKEND) $< --format-failures --def-module $(KPROVE_MODULE)
 
 gen_test_deps:=$(wildcard tests/gen-specs/*)
 
