@@ -1,26 +1,12 @@
+KEVM Lemmas
+===========
+
 ```k
-requires "edsl.k"
-
-module VERIFICATION
-    imports EDSL
-
-    // rule I -Int I => 0
-    // avoids the following expression:
-    // andBool G >=Int ( ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
-    //              -Int ((MU *Int Gmemory < SCHEDULE >) +Int ((MU *Int MU) /Int Gquadcoeff < SCHEDULE >))
-    //                 )
-
-    // rule I -Int 0 => I
-    // avoids the following expression:
-    // G -Int 0
-endmodule
+requires "evm.k"
 
 module KEVM-LEMMAS-SPEC
-    imports VERIFICATION
+    imports EVM
 ```
-
-**TODO**: See if this speeds up ocaml backend by adding `[structural]` to these rules in the semantics.
-**TODO**: See if this speeds up llvm backend by modifying https://github.com/kframework/llvm-backend/blob/master/matching/src/Pattern/Parser.hs#L163
 
 ```k
     rule <k> #next [ PUSH(N, M) ] => . ... </k>

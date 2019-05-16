@@ -358,6 +358,7 @@ test-proof: $(proof_tests:=.prove)
 verified_lemmas:=kevm-lemmas
 verified_lemmas_files:=$(patsubst %, tests/specs/verified/%-spec.k, $(verified_lemmas))
 
+test-prove-verified: KPROVE_MODULE=EVM
 test-prove-verified: $(verified_lemmas_files:=.prove)
 
 test_gen_specs:=totalSupply balanceOf allowance approve transfer transferFrom
