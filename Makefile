@@ -27,7 +27,7 @@ export LUA_PATH
         defn java-defn ocaml-defn node-defn haskell-defn \
         test test-all test-conformance test-slow-conformance test-all-conformance \
         test-vm test-slow-vm test-all-vm test-bchain test-slow-bchain test-all-bchain \
-        test-proof test-parse test-interactive test-interactive-run test-interactive-prove test-prove-kevm-lemmas test-prove-gen \
+        test-proof test-parse test-interactive test-interactive-run test-interactive-prove test-prove-verified test-prove-gen \
         metropolis-theme 2017-devcon3 sphinx
 .SECONDARY:
 
@@ -300,6 +300,11 @@ gen_test_deps:=$(wildcard tests/gen-specs/*)
 tests/specs/ds-token-erc20/%-spec.k: tests/specs/ds-token-erc20/ds-token-erc20-spec.ini $(gen_tests_deps)
 	python3 tests/gen-specs/gen-specs.py $< $* > $@
 
+tests/specs/verified/%-spec.k: %.md $(PANDOC_TANGLE_SUBMODULE)/make.timestamp
+	@echo "==  tangle: $@"
+	mkdir -p $(dir $@)
+	pandoc --from markdown --to "$(TANGLER)" --metadata=code:"$(symbolic_tangle)" $< > $@
+
 # Smoke Tests
 
 smoke_tests_run=tests/ethereum-tests/VMTests/vmArithmeticTest/add0.json \
@@ -349,8 +354,10 @@ proof_tests=$(wildcard $(proof_specs_dir)/*/*-spec.k)
 
 test-proof: $(proof_tests:=.prove)
 
-test-prove-kevm-lemmas: .build/java/kevm-lemmas-spec.k .build/java/driver-kompiled/timestamp
-	./kevm prove --backend $(TEST_SYMBOLIC_BACKEND) .build/java/kevm-lemmas-spec.k --boundary-cells k,pc --format-failures
+verified_lemmas:=kevm-lemmas
+verified_lemmas_files:=$(patsubst %, tests/specs/verified/%-spec.k, $(verified_lemmas))
+
+test-prove-verified: $(verified_lemmas_files:=.prove)
 
 test_gen_specs:=totalSupply balanceOf allowance approve transfer transferFrom
 test_prove_gen_specs:=$(patsubst %, tests/specs/ds-token-erc20/%-spec.k, $(test_gen_specs))
