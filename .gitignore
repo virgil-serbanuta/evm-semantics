@@ -31,3 +31,5 @@
 
 # Documentation ignores
 docs/build
+
+/media/*.pdf
