@@ -295,8 +295,10 @@ tests/%.parse: tests/%
 tests/%.prove: tests/%
 	./kevm prove --backend $(TEST_SYMBOLIC_BACKEND) $< --format-failures
 
-tests/specs/ds-token-erc20/%-spec.k: tests/specs/ds-token-erc20/ds-token-erc20-spec.ini
-	python3 tests/gen-specs/gen-specs.py $^ $* > $@
+gen_test_deps:=$(wildcard tests/gen-specs/*)
+
+tests/specs/ds-token-erc20/%-spec.k: tests/specs/ds-token-erc20/ds-token-erc20-spec.ini $(gen_tests_deps)
+	python3 tests/gen-specs/gen-specs.py $< $* > $@
 
 # Smoke Tests
 
