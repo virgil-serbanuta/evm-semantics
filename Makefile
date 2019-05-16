@@ -27,7 +27,7 @@ export LUA_PATH
         defn java-defn ocaml-defn node-defn haskell-defn \
         test test-all test-conformance test-slow-conformance test-all-conformance \
         test-vm test-slow-vm test-all-vm test-bchain test-slow-bchain test-all-bchain \
-        test-proof test-parse test-interactive test-interactive-run test-interactive-prove test-kevm-lemmas test-prove-gen \
+        test-proof test-parse test-interactive test-interactive-run test-interactive-prove test-prove-kevm-lemmas test-prove-gen \
         metropolis-theme 2017-devcon3 sphinx
 .SECONDARY:
 
@@ -349,7 +349,7 @@ proof_tests=$(wildcard $(proof_specs_dir)/*/*-spec.k)
 
 test-proof: $(proof_tests:=.prove)
 
-test-kevm-lemmas: .build/java/kevm-lemmas-spec.k .build/java/driver-kompiled/timestamp
+test-prove-kevm-lemmas: .build/java/kevm-lemmas-spec.k .build/java/driver-kompiled/timestamp
 	./kevm prove --backend $(TEST_SYMBOLIC_BACKEND) .build/java/kevm-lemmas-spec.k --boundary-cells k,pc --format-failures
 
 test_gen_specs:=totalSupply balanceOf allowance approve transfer transferFrom
