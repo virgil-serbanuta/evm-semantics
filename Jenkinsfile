@@ -115,5 +115,18 @@ pipeline {
         }
       }
     }
+    stage('Test Verified Lemmas (Java)') {
+      options {
+        lock("proofs-${env.NODE_NAME}")
+      }
+      steps {
+        sh '''
+          export PATH=$HOME/.local/bin:$PATH
+          nprocs=$(nproc)
+          [ "$nprocs" -gt '6' ] && nprocs='6'
+          make test-prove-verified -j"$nprocs"
+        '''
+      }
+    }
   }
 }
