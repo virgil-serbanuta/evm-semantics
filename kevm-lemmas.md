@@ -10,7 +10,6 @@ module KEVM-LEMMAS-SPEC
 
 ```k
     rule <k> #next [ PUSH(N, M) ] => . ... </k>
-         <mode> NORMAL </mode>
          <schedule> SCHEDULE </schedule>
          <pc> PCOUNT => PCOUNT +Int #widthOp(PUSH(N, M)) </pc>
          <wordStack> WS => M : WS </wordStack>
@@ -23,7 +22,6 @@ module KEVM-LEMMAS-SPEC
 
 ```k
     rule <k> #next [ POP ] => . ... </k>
-         <mode> NORMAL </mode>
          <schedule> SCHEDULE </schedule>
          <pc> PCOUNT => PCOUNT +Int #widthOp(POP) </pc>
          <wordStack> W : WS => WS </wordStack>
@@ -36,7 +34,6 @@ module KEVM-LEMMAS-SPEC
 
 ```k
     rule <k> #next [ ADD ] => . ... </k>
-         <mode> NORMAL </mode>
          <schedule> SCHEDULE </schedule>
          <pc> PCOUNT => PCOUNT +Int 1 </pc>
          <wordStack> X : Y : WS => X +Word Y : WS </wordStack>
@@ -50,7 +47,6 @@ module KEVM-LEMMAS-SPEC
 
 ```k
     rule <k> #next [ SUB ] => . ... </k>
-         <mode> NORMAL </mode>
          <schedule> SCHEDULE </schedule>
          <pc> PCOUNT => PCOUNT +Int 1 </pc>
          <wordStack> X : Y : WS => X -Word Y : WS </wordStack>
@@ -64,7 +60,6 @@ module KEVM-LEMMAS-SPEC
 
 ```k
     rule <k> #next [ MUL ] => . ... </k>
-         <mode> NORMAL </mode>
          <schedule> SCHEDULE </schedule>
          <pc> PCOUNT => PCOUNT +Int 1 </pc>
          <wordStack> X : Y : WS => X *Word Y : WS </wordStack>
@@ -78,7 +73,6 @@ module KEVM-LEMMAS-SPEC
 
 ```k
     rule <k> #next [ DIV ] => . ... </k>
-         <mode> NORMAL </mode>
          <schedule> SCHEDULE </schedule>
          <pc> PCOUNT => PCOUNT +Int 1 </pc>
          <wordStack> X : Y : WS => X /Word Y : WS </wordStack>
@@ -92,7 +86,6 @@ module KEVM-LEMMAS-SPEC
 
 ```k
     rule <k> PUSH(N, X) ; PUSH(M, Y) ; ADD ; .OpCodes => . ... </k>
-         <mode> NORMAL </mode>
          <schedule> SCHEDULE </schedule>
          <pc> PCOUNT => PCOUNT +Int #widthOps(PUSH(N, X) ; PUSH(M, Y) ; ADD ; .OpCodes) </pc>
          <wordStack> WS => X +Word Y : WS </wordStack>
