@@ -268,6 +268,7 @@ endif
 TEST_CONCRETE_BACKEND:=ocaml
 TEST_SYMBOLIC_BACKEND:=java
 KPROVE_MODULE:=VERIFICATION
+TEST:=./kevm
 CHECK:=git --no-pager diff --no-index --ignore-all-space
 
 KEVM_MODE:=NORMAL
@@ -289,22 +290,22 @@ tests/ethereum-tests/VMTests/%: KEVM_MODE=VMTESTS
 tests/ethereum-tests/VMTests/%: KEVM_SCHEDULE=DEFAULT
 
 tests/%.run: tests/%
-	MODE=$(KEVM_MODE) SCHEDULE=$(KEVM_SCHEDULE) ./kevm interpret --backend $(TEST_CONCRETE_BACKEND) $< > tests/$*.$(TEST_CONCRETE_BACKEND)-out \
+	MODE=$(KEVM_MODE) SCHEDULE=$(KEVM_SCHEDULE) $(TEST) interpret --backend $(TEST_CONCRETE_BACKEND) $< > tests/$*.$(TEST_CONCRETE_BACKEND)-out \
 	    || $(CHECK) tests/templates/output-success-$(TEST_CONCRETE_BACKEND).json tests/$*.$(TEST_CONCRETE_BACKEND)-out
 	rm -rf tests/$*.$(TEST_CONCRETE_BACKEND)-out
 
 tests/%.run-interactive: tests/%
-	MODE=$(KEVM_MODE) SCHEDULE=$(KEVM_SCHEDULE) ./kevm run --backend $(TEST_CONCRETE_BACKEND) $< > tests/$*.$(TEST_CONCRETE_BACKEND)-out \
+	MODE=$(KEVM_MODE) SCHEDULE=$(KEVM_SCHEDULE) $(TEST) run --backend $(TEST_CONCRETE_BACKEND) $< > tests/$*.$(TEST_CONCRETE_BACKEND)-out \
 	    || $(CHECK) tests/templates/output-success-$(TEST_CONCRETE_BACKEND).json tests/$*.$(TEST_CONCRETE_BACKEND)-out
 	rm -rf tests/$*.$(TEST_CONCRETE_BACKEND)-out
 
 tests/%.parse: tests/%
-	./kevm kast --backend $(TEST_CONCRETE_BACKEND) $< > $@-out
+	$(TEST) kast --backend $(TEST_CONCRETE_BACKEND) $< > $@-out
 	$(CHECK) $@-expected $@-out
 	rm -rf $@-out
 
 tests/%.prove: tests/%
-	./kevm prove --backend $(TEST_SYMBOLIC_BACKEND) $< --format-failures --def-module $(KPROVE_MODULE)
+	$(TEST) prove --backend $(TEST_SYMBOLIC_BACKEND) $< --format-failures --def-module $(KPROVE_MODULE)
 
 gen_test_deps:=$(wildcard tests/gen-specs/*)
 
