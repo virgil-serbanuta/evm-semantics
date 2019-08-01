@@ -10,16 +10,15 @@ RUN    apt-get update                                                         \
         protobuf-compiler python3 python-pygments python-recommonmark         \
         python-sphinx time zlib1g-dev
 
-COPY deps/k/haskell-backend/src/main/native/haskell-backend/scripts/install-stack.sh /.install-stack/
-RUN /.install-stack/install-stack.sh
+# Copy z3.
+COPY --from=runtimeverificationinc/z3:4.6.0-llvm-8-ubuntu-bionic \
+     --chown=user:user \
+     /z3 /home/user/z3
 
-RUN    git clone 'https://github.com/z3prover/z3' --branch=z3-4.6.0 \
-    && cd z3                                                        \
-    && python scripts/mk_make.py                                    \
-    && cd build                                                     \
-    && make -j8                                                     \
-    && make install                                                 \
-    && cd ../..                                                     \
+# Install z3.
+RUN    cd /home/user/z3/build \
+    && sudo make install      \
+    && cd ../..               \
     && rm -rf z3
 
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
@@ -30,9 +29,11 @@ USER user:user
 
 COPY --chown=user:user deps/ /home/user/deps/
 
-RUN ./deps/k/llvm-backend/src/main/native/llvm-backend/install-rust
-RUN ./deps/k/k-distribution/src/main/scripts/bin/k-configure-opam-dev
-RUN    cd deps/k/haskell-backend/src/main/native/haskell-backend/ \
+RUN /home/user/deps/k/haskell-backend/src/main/native/haskell-backend/scripts/install-stack.sh
+RUN    cd /home/user/deps/k/llvm-backend/src/main/native/llvm-backend/ \
+    && ./install-rust
+RUN /home/user/deps/k/k-distribution/src/main/scripts/bin/k-configure-opam-dev
+RUN    cd /home/user/deps/k/haskell-backend/src/main/native/haskell-backend/ \
     && stack build --only-snapshot
 
 ENV LD_LIBRARY_PATH=/usr/local/lib
