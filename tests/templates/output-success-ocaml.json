@@ -140,6 +140,9 @@
       <blockhash>
         .List
       </blockhash>
+      <chainID>
+        28346
+      <chainID>
     </evm>
     <network>
       <activeAccounts>
