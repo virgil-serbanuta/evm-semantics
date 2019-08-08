@@ -289,13 +289,21 @@
   {
     _25
   #Equals
+    <chainID>
+      28346
+    </chainID>
+  }
+#And
+  {
+    _26
+  #Equals
     <k>
       #halt ~> .EthereumSimulation
     </k>
   }
 #And
   {
-    _26
+    _27
   #Equals
     <exit-code>
       1
@@ -303,7 +311,7 @@
   }
 #And
   {
-    _27
+    _28
   #Equals
     <mode>
       NORMAL
@@ -311,7 +319,7 @@
   }
 #And
   {
-    _28
+    _29
   #Equals
     <schedule>
       BYZANTIUM
