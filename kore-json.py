@@ -49,14 +49,18 @@ def print_kast(data, sort="SortJSON"):
 
 def print_klabel(s):
   print("Lbl" + s.replace("_", "'Unds'").replace("`", "").replace("(.KList)", "{}"), end=' ')
+def print_token(s):
+  print("\\dv{SortInt{}}(\"" + s.replace("#token(\"", "").replace("\",\"Int\")", "") + "\")", end=' ')
 
-print("[initial-configuration{}(LblinitGeneratedTopCell{}(Lbl'Unds'Map'Unds'{}(Lbl'Unds'Map'Unds'{}(Lbl'Unds'Map'Unds'{}(Lbl'Stop'Map{}(),Lbl'UndsPipe'-'-GT-Unds'{}(inj{SortKConfigVar{}, SortKItem{}}(\dv{SortKConfigVar{}}(\"$PGM\")),inj{SortJSON{}, SortKItem{}}(", end=' ')
+print("[initial-configuration{}(LblinitGeneratedTopCell{}(Lbl'Unds'Map'Unds'{}(Lbl'Unds'Map'Unds'{}(Lbl'Unds'Map'Unds'{}(Lbl'Unds'Map'Unds'{}(Lbl'Stop'Map{}(),Lbl'UndsPipe'-'-GT-Unds'{}(inj{SortKConfigVar{}, SortKItem{}}(\dv{SortKConfigVar{}}(\"$PGM\")),inj{SortJSON{}, SortKItem{}}(", end=' ')
 print_kast(data)
 print("))),Lbl'UndsPipe'-'-GT-Unds'{}(inj{SortKConfigVar{}, SortKItem{}}(\dv{SortKConfigVar{}}(\"$SCHEDULE\")),inj{SortSchedule{}, SortKItem{}}(", end=' ')
 print_klabel(sys.argv[2])
 print("()))),Lbl'UndsPipe'-'-GT-Unds'{}(inj{SortKConfigVar{}, SortKItem{}}(\dv{SortKConfigVar{}}(\"$MODE\")),inj{SortMode{}, SortKItem{}}(", end=' ')
 print_klabel(sys.argv[3])
-print("())))))]")
+print("()))),Lbl'UndsPipe'-'-GT-Unds'{}(inj{SortKConfigVar{}, SortKItem{}}(\dv{SortKConfigVar{}}(\"$CHAINID\")),inj{SortInt{}, SortKItem{}}(", end=' ')
+print_token(sys.argv[4])
+print(")))))]")
 print()
 print("module TMP")
 print("endmodule []")
