@@ -144,6 +144,9 @@
         ListItem ( 4746051719422293590722610549793911264493366370041112137154393734119990786967 )
         ListItem ( 0 )
       </blockhash>
+      <chainID>
+        28346
+      <chainID>
     </evm>
     <network>
       <activeAccounts>
