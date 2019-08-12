@@ -70,6 +70,8 @@ module FORWARDTOHOTWALLET-FAILURE-3-SPEC
 
         <ommerBlockHeaders> _ </ommerBlockHeaders>
         <blockhash> _ </blockhash>
+
+        <chainID> _ </chainID>
       </evm>
 
       <network>

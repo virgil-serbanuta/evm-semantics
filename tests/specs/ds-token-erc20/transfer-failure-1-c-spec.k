@@ -70,6 +70,8 @@ module TRANSFER-FAILURE-1-C-SPEC
 
         <ommerBlockHeaders> _ </ommerBlockHeaders>
         <blockhash> _ </blockhash>
+
+        <chainID> _ </chainID>
       </evm>
 
       <network>

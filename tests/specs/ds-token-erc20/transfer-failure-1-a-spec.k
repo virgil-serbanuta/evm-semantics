@@ -71,6 +71,8 @@ module TRANSFER-FAILURE-1-A-SPEC
         <ommerBlockHeaders> _ </ommerBlockHeaders>
         <blockhash> _ </blockhash>
         <chainID> _ </chainID>
+
+        <chainID> _ </chainID>
       </evm>
 
       <network>

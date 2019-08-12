@@ -70,6 +70,8 @@ module TOTALSUPPLY-SPEC
 
         <ommerBlockHeaders> _ </ommerBlockHeaders>
         <blockhash> _ </blockhash>
+
+        <chainID> _ </chainID>
       </evm>
 
       <network>
